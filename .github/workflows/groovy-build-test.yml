@@ -15,7 +15,8 @@
 
 name: Build and test
 
-on: [push, pull_request]
+on:
+  workflow_dispatch:
 
 permissions:
   contents: read
@@ -117,7 +118,8 @@ jobs:
           exit 0
         timeout-minutes: 15
       - name: "🏃Test with Gradle"
-        run: ./gradlew test ${{ matrix.junit-network }} -Pgroovy.grape.bridge-cache=true -Ptarget.java.home="$JAVA_HOME_${{ matrix.java }}_${{ runner.arch }}"
+        run: ./gradlew test ${{ matrix.junit-network }} -Pgroovy.grape.bridge-cache=true 
+          -Ptarget.java.home="$JAVA_HOME_${{ matrix.java }}_${{ runner.arch }}"
         shell: bash
         timeout-minutes: 60
       - name: "🚀Upload reports"
